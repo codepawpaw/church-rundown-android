@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/churchItem"
+android:background="@drawable/underlined_card"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="wrap_content">
+<TextView
+    android:id="@+id/churchName"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:textStyle="bold"
+    android:paddingLeft="16dp"
+    android:fontFamily="sans-serif-thin"
+    android:paddingTop="16dp"
+    android:textSize="19dp"
+    android:textColor="#000"
+    android:text="GPIB PAULUS"/>
+
+<TextView
+    android:id="@+id/churchDesc"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:textStyle="bold"
+    android:paddingBottom="36dp"
+    android:paddingLeft="16dp"
+    android:fontFamily="sans-serif-thin"
+    android:textSize="16dp"
+    android:textColor="#000"
+    android:text="Taman Suropati No 12G"/>
+</LinearLayout>
