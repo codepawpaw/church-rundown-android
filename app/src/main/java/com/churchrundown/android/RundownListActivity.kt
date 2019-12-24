@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.card.MaterialCardView
 import com.google.gson.GsonBuilder
 import entity.Data
 import entity.Rundown
@@ -35,21 +36,22 @@ class RundownListActivity : AppCompatActivity() {
         val jsonArrayOfRundowns: List<Rundown> = gson.fromJson(StringReader(rundowns), Array<Rundown>::class.java).toList()
 
         jsonArrayOfRundowns.forEach {
-            val layout = LayoutInflater.from(applicationContext).inflate(R.layout.rundown_item, null)
+            val layout = layoutInflater.inflate(R.layout.rundown_item, rundownItemContainer, false)
+            val rundownItem = layout.findViewById<MaterialCardView>(R.id.rundownItem)
 
             val dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
+            rundownItem.findViewById<TextView>(R.id.rundownItemTitle).text = it.title
+            rundownItem.findViewById<TextView>(R.id.rundownItemSubtitle).text = it.subtitle
+            rundownItem.findViewById<TextView>(R.id.rundownItemStartTime).text = "Dimulai " + LocalDate.parse(it.startTime, dateFormat).toString()
+            rundownItem.findViewById<TextView>(R.id.rundownItemEndTime).text = "Selesai " + LocalDate.parse(it.endTime, dateFormat).toString()
 
-            layout.findViewById<TextView>(R.id.rundownItemTitle).text = it.title
-            layout.findViewById<TextView>(R.id.rundownItemSubtitle).text = it.subtitle
-            layout.findViewById<TextView>(R.id.rundownItemStartTime).text = "Dimulai " + LocalDate.parse(it.startTime, dateFormat).toString()
-            layout.findViewById<TextView>(R.id.rundownItemEndTime).text = "Selesai " + LocalDate.parse(it.endTime, dateFormat).toString()
+            rundownItem.id = it.id!!.toInt()
 
-            layout.id = it.id!!.toInt()
-            layout.setOnClickListener(View.OnClickListener {
+            rundownItem.setOnClickListener(View.OnClickListener {
                 clickHandler(it)
             })
 
-            rundownItemContainer.addView(layout)
+            rundownItemContainer.addView(rundownItem)
         }
     }
 

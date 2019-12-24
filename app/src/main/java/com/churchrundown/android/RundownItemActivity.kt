@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
+import com.google.android.material.card.MaterialCardView
 import com.google.gson.GsonBuilder
 import entity.Rundown
 import entity.RundownItem
@@ -32,13 +33,14 @@ class RundownItemActivity : AppCompatActivity() {
         val jsonArrayOfRundownItems: List<RundownItem> = gson.fromJson(StringReader(rundownItems), Array<RundownItem>::class.java).toList()
 
         jsonArrayOfRundownItems.forEach {
-            val layout = LayoutInflater.from(applicationContext).inflate(R.layout.rundown_item_detail, null)
+            val layout = layoutInflater.inflate(R.layout.rundown_item_detail, rundownItemContainer, false)
+            val rundownItemDetail = layout.findViewById<MaterialCardView>(R.id.rundownItemDetail)
 
-            layout.findViewById<TextView>(R.id.rundownItemDetailTitle).text = it.title
-            layout.findViewById<TextView>(R.id.rundownItemDetailSubtitle).text = it.subtitle
-            layout.findViewById<TextView>(R.id.rundownItemDetailContent).text = HtmlCompat.fromHtml(it.text, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            rundownItemDetail.findViewById<TextView>(R.id.rundownItemDetailTitle).text = it.title
+            rundownItemDetail.findViewById<TextView>(R.id.rundownItemDetailSubtitle).text = it.subtitle
+            rundownItemDetail.findViewById<TextView>(R.id.rundownItemDetailContent).text = HtmlCompat.fromHtml(it.text, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
-            rundownItemContainer.addView(layout)
+            rundownItemContainer.addView(rundownItemDetail)
         }
     }
 }

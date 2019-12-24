@@ -8,7 +8,7 @@ class RetrofitMain {
         var retrofit: Retrofit? = null
 
         fun build() {
-            var BASE_URL = "http://10.236.218.155:3000/public/"
+            var BASE_URL = "http://192.168.1.8:3000/public/"
 
             retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
