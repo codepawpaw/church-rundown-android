@@ -19,7 +19,10 @@ import services.RundownItemService
 import services.RundownService
 import java.io.StringReader
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.format.TextStyle
+import java.util.*
 
 
 class RundownListActivity : AppCompatActivity() {
@@ -40,10 +43,14 @@ class RundownListActivity : AppCompatActivity() {
             val rundownItem = layout.findViewById<MaterialCardView>(R.id.rundownItem)
 
             val dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
+
+            val showTime = LocalDateTime.parse(it.startTime, dateFormat)
+            val endTime = LocalDateTime.parse(it.endTime, dateFormat)
+
             rundownItem.findViewById<TextView>(R.id.rundownItemTitle).text = it.title
             rundownItem.findViewById<TextView>(R.id.rundownItemSubtitle).text = it.subtitle
-            rundownItem.findViewById<TextView>(R.id.rundownItemStartTime).text = "Dimulai " + LocalDate.parse(it.startTime, dateFormat).toString()
-            rundownItem.findViewById<TextView>(R.id.rundownItemEndTime).text = "Selesai " + LocalDate.parse(it.endTime, dateFormat).toString()
+            rundownItem.findViewById<TextView>(R.id.rundownItemStartTime).text = "Dimulai " + showTime.dayOfMonth + " " + showTime.month.getDisplayName(TextStyle.FULL, Locale.ENGLISH) + " " + showTime.hour + ":" + showTime.minute
+            rundownItem.findViewById<TextView>(R.id.rundownItemEndTime).text = "Selesai " + endTime.dayOfMonth + " " + endTime.month.getDisplayName(TextStyle.FULL, Locale.ENGLISH) + " " + endTime.hour + ":" + endTime.minute
 
             rundownItem.id = it.id!!.toInt()
 
