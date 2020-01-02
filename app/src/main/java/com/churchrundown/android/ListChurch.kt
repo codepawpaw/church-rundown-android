@@ -7,20 +7,17 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.gson.Gson
 import entity.Data
-import entity.Organizer
-import entity.Rundown
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import services.OrganizerService
 import services.RundownService
+import utility.DisplayUtil
+import java.util.*
 
 class ListChurch : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_church)
@@ -51,6 +48,7 @@ class ListChurch : AppCompatActivity() {
             layout.setOnClickListener(View.OnClickListener {
                 clickHandler(it)
             })
+
             listOfChurch.addView(layout)
         }
     }
@@ -63,7 +61,17 @@ class ListChurch : AppCompatActivity() {
         val service =
             retrofit!!.create(RundownService::class.java)
 
-        val call = service.getByOrganizerId(churchId)
+        val calendar = Calendar.getInstance()
+
+        val currentDay = DisplayUtil.getDisplayedFormatTime(calendar.get(Calendar.DAY_OF_MONTH))
+        val currentMonth = DisplayUtil.getDisplayedFormatTime(calendar.get(Calendar.MONDAY) + 1)
+        val currentYear = calendar.get(Calendar.YEAR).toString()
+
+
+        val startDate = currentYear + "-" + currentMonth + "-" + currentDay + "T00:00:00Z"
+        val endDate = currentYear + "-" + currentMonth + "-" + currentDay + "T24:00:00Z"
+
+        val call = service.getByOrganizerId(churchId, startDate, endDate)
 
         call.enqueue(object : Callback<Data> {
             override fun onFailure(call: Call<Data>, t: Throwable) {
@@ -74,11 +82,11 @@ class ListChurch : AppCompatActivity() {
                 call: Call<Data>,
                 response: Response<Data>
             ) {
-                println("LOG MESSAGE " + response.body())
                 val intent = Intent(applicationContext, RundownListActivity::class.java)
                 val rundowns = JSONArray(response.body()!!.data)
 
                 intent.putExtra("rundowns", rundowns.toString())
+                intent.putExtra("organizerId", "4")
                 startActivity(intent)
             }
         })

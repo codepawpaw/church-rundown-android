@@ -9,9 +9,64 @@
     tools:showIn="@layout/activity_rundown_list">
 
     <LinearLayout
-        android:id="@+id/rundownItemContainer"
         android:orientation="vertical"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
+            <EditText android:id="@+id/showTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:ems="10"
+                android:layout_marginBottom="16dp"
+                android:visibility="visible"
+                android:hint="Enter Date"/>
+
+            <TextView
+                android:id="@+id/rundownListTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="33dp"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:textColor="#000"
+                android:text="Rundown For Today"/>
+
+            <LinearLayout
+                android:id="@+id/rundownItemDatePicker"
+                android:orientation="vertical"
+                android:layout_marginLeft="30dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"
+                android:layout_width="match_parent">
+                <DatePicker
+                    android:id="@+id/datePicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:datePickerMode="calendar"/>
+
+                <Button
+                    android:id="@+id/selectDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="200dp"
+                    android:text="Select Date" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rundownItemContainer"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:visibility="visible">
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
