@@ -43,12 +43,7 @@ class ListChurch : AppCompatActivity() {
         val searchTextBox = findViewById<EditText>(R.id.searchTextBox)
         searchTextBox.setOnKeyListener { _, keyCode, event ->
             if (event.action === KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                // Perform action on key press
-                Toast.makeText(this, searchTextBox.text, Toast.LENGTH_SHORT)
-                    .show()
-
                 searchChurch(searchTextBox.text.toString())
-
                 true
             }
 
