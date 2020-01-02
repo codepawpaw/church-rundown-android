@@ -44,7 +44,7 @@
                     android:textSize="19dp"
                     android:textColor="#fff"
                     android:background="@color/cardview_dark_background"
-                    android:text="Hasil pencarian\n"/>
+                    android:text="Search Result\n"/>
 
             </LinearLayout>
         </LinearLayout>
