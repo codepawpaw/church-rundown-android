@@ -13,6 +13,27 @@
         android:orientation="vertical"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
+
+        <TextView
+            android:id="@+id/rundownItemTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="33dp"
+            android:layout_marginTop="120dp"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="#000"
+            android:visibility="gone"
+            android:text=""/>
+
+        <TextView
+            android:id="@+id/rundownItemDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="33dp"
+            android:textSize="16dp"
+            android:visibility="gone"
+            android:text=""/>
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

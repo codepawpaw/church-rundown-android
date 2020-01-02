@@ -32,6 +32,17 @@ class RundownItemActivity : AppCompatActivity() {
         val gson = gsonBuilder.create()
         val jsonArrayOfRundownItems: List<RundownItem> = gson.fromJson(StringReader(rundownItems), Array<RundownItem>::class.java).toList()
 
+        if(jsonArrayOfRundownItems.isEmpty()) {
+            val rundownItemTitle = findViewById<TextView>(R.id.rundownItemTitle)
+            val rundownItemDescription = findViewById<TextView>(R.id.rundownItemDescription)
+
+            rundownItemTitle.visibility = View.VISIBLE
+            rundownItemDescription.visibility = View.VISIBLE
+
+            rundownItemTitle.text = "No data available"
+            rundownItemDescription.text = "There are no data available. Maybe choose other rundown to see more results."
+        }
+
         jsonArrayOfRundownItems.forEach {
             val layout = layoutInflater.inflate(R.layout.rundown_item_detail, rundownItemContainer, false)
             val rundownItemDetail = layout.findViewById<MaterialCardView>(R.id.rundownItemDetail)
