@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content"/>
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/searchTextBox"
                     android:layout_marginTop="30dp"
                     android:layout_marginLeft="57dp"
                     android:layout_width="250dp"
@@ -37,6 +37,7 @@
                     android:shadowColor="@color/cardview_light_background"
                     android:background="@drawable/rounded_textbox"
                     android:ems="10"
+                    android:textColor="#000"
                     android:hint="GPIB PAULUS"
                     android:gravity="start|top"
                     android:drawableLeft="@drawable/ic_search_24px"

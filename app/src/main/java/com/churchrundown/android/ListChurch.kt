@@ -2,17 +2,22 @@ package com.churchrundown.android
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import entity.Data
+import entity.Organizer
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import services.OrganizerService
 import services.RundownService
 import utility.DisplayUtil
 import java.util.*
@@ -35,6 +40,21 @@ class ListChurch : AppCompatActivity() {
             churchResultElement.addView(notFoundLayout)
         }
 
+        val searchTextBox = findViewById<EditText>(R.id.searchTextBox)
+        searchTextBox.setOnKeyListener { _, keyCode, event ->
+            if (event.action === KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                // Perform action on key press
+                Toast.makeText(this, searchTextBox.text, Toast.LENGTH_SHORT)
+                    .show()
+
+                searchChurch(searchTextBox.text.toString())
+
+                true
+            }
+
+            false
+        }
+
         for (i in 0 until jsonArrayOfOrganizers.length()) {
             val organizerObject = JSONObject(jsonArrayOfOrganizers[i].toString())
             var churchId = organizerObject.getString("id")
@@ -51,6 +71,37 @@ class ListChurch : AppCompatActivity() {
 
             listOfChurch.addView(layout)
         }
+    }
+
+    fun searchChurch(churchName: String) {
+        var retrofit = RetrofitMain.retrofit
+
+        val service =
+            retrofit!!.create(OrganizerService::class.java)
+
+        val call = service.getOrganizer(churchName)
+
+        call.enqueue(object : Callback<List<Organizer>> {
+            override fun onFailure(call: Call<List<Organizer>>, t: Throwable) {
+                println("LOG MESSAGE = " + t.message)
+            }
+
+            override fun onResponse(
+                call: Call<List<Organizer>>,
+                response: Response<List<Organizer>>
+            ) {
+                val intent = Intent(applicationContext, ListChurch::class.java)
+                val organizers = response.body()
+
+                val listOfOrganizer = JSONArray()
+                organizers!!.forEach {
+                    listOfOrganizer.put(it.toJSON())
+                }
+
+                intent.putExtra("organizers", listOfOrganizer.toString())
+                startActivity(intent)
+            }
+        })
     }
 
     fun clickHandler(view: View) {

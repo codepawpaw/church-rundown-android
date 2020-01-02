@@ -25,6 +25,12 @@ import services.RundownService
 import utility.DisplayUtil
 import java.text.DateFormatSymbols
 import android.widget.ProgressBar
+import android.widget.Toast
+import android.view.KeyEvent.KEYCODE_ENTER
+import android.view.KeyEvent
+import entity.Organizer
+import kotlinx.android.synthetic.main.activity_main_menu.*
+import services.OrganizerService
 
 class RundownListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +51,53 @@ class RundownListActivity : AppCompatActivity() {
             showDatePicker(showTimeEditText, organizerId)
         })
 
+        val searchTextBox = findViewById<EditText>(R.id.searchTextBox)
+        searchTextBox.setOnKeyListener { _, keyCode, event ->
+            if (event.action === KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
+                // Perform action on key press
+                Toast.makeText(this, searchTextBox.text, Toast.LENGTH_SHORT)
+                    .show()
+
+                searchChurch(searchTextBox.text.toString())
+
+                true
+            }
+
+            false
+        }
+
         renderRundowns(jsonArrayOfRundowns)
+    }
+
+    fun searchChurch(churchName: String) {
+        var retrofit = RetrofitMain.retrofit
+
+        val service =
+            retrofit!!.create(OrganizerService::class.java)
+
+        val call = service.getOrganizer(churchName.toString())
+
+        call.enqueue(object : Callback<List<Organizer>> {
+            override fun onFailure(call: Call<List<Organizer>>, t: Throwable) {
+                println("LOG MESSAGE = " + t.message)
+            }
+
+            override fun onResponse(
+                call: Call<List<Organizer>>,
+                response: Response<List<Organizer>>
+            ) {
+                val intent = Intent(applicationContext, ListChurch::class.java)
+                val organizers = response.body()
+
+                val listOfOrganizer = JSONArray()
+                organizers!!.forEach {
+                    listOfOrganizer.put(it.toJSON())
+                }
+
+                intent.putExtra("organizers", listOfOrganizer.toString())
+                startActivity(intent)
+            }
+        })
     }
 
     fun searchRundown(day: String, month: String, year: String, organizerId: Int) {
