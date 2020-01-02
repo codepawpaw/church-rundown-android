@@ -24,6 +24,7 @@ import android.app.DatePickerDialog
 import services.RundownService
 import utility.DisplayUtil
 import java.text.DateFormatSymbols
+import android.widget.ProgressBar
 
 class RundownListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,11 +57,15 @@ class RundownListActivity : AppCompatActivity() {
         val service =
             retrofit!!.create(RundownService::class.java)
 
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        progressBar.visibility = View.VISIBLE
+
         val call = service.getByOrganizerId(organizerId, startDate, endDate)
 
         call.enqueue(object : Callback<Data> {
             override fun onFailure(call: Call<Data>, t: Throwable) {
                 println("LOG MESSAGE = " + t.message)
+                progressBar.visibility = View.GONE
             }
 
             override fun onResponse(
@@ -74,6 +79,8 @@ class RundownListActivity : AppCompatActivity() {
                 val jsonArrayOfRundowns: List<Rundown> = gson.fromJson(StringReader(rundowns), Array<Rundown>::class.java).toList()
 
                 renderRundowns(jsonArrayOfRundowns)
+
+                progressBar.visibility = View.GONE
             }
         })
     }
@@ -84,6 +91,9 @@ class RundownListActivity : AppCompatActivity() {
 
         val rundownItemContainer = findViewById<LinearLayout>(R.id.rundownItemContainer)
         rundownItemContainer.removeAllViews()
+
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        progressBar.visibility = View.GONE
     }
 
     fun renderRundowns(jsonArrayOfRundowns: List<Rundown>) {
