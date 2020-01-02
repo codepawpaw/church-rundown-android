@@ -37,6 +37,15 @@
                 android:textColor="#000"
                 android:text="Rundown For Today"/>
 
+            <TextView
+                android:id="@+id/rundownListDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="33dp"
+                android:textSize="16dp"
+                android:visibility="gone"
+                android:text=""/>
+
             <LinearLayout
                 android:id="@+id/rundownItemDatePicker"
                 android:orientation="vertical"
