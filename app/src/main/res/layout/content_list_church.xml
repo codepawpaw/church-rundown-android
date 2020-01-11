@@ -16,6 +16,41 @@
         android:orientation="vertical"
         tools:context=".ListActivity">
 
+        <TextView
+            android:id="@+id/churchListTitle"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:textColor="#000"
+            android:text="Churchs for you"
+            />
+
+        <LinearLayout
+            android:id="@+id/churchListNotFound"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginTop="120dp"
+            android:visibility="gone"
+            android:orientation="vertical">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textSize="20dp"
+                android:text="Opps! There is nothing here!"
+                />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textSize="20dp"
+                android:textColor="#F06292"
+                android:text="Try with other keyword"
+                />
+        </LinearLayout>
+
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/listOfChurch"
@@ -24,7 +59,6 @@
             android:layout_marginTop="2dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/shadow_card"
             android:orientation="vertical">
 
             <LinearLayout
@@ -33,19 +67,6 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:fontFamily="sans-serif-thin"
-                    android:paddingTop="16dp"
-                    android:textSize="19dp"
-                    android:textColor="#fff"
-                    android:background="@color/cardview_dark_background"
-                    android:text="Search Result\n"/>
-
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

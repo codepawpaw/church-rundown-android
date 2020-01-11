@@ -18,6 +18,17 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent">
 
+            <TextView
+                android:id="@+id/rundownListChurchName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="33dp"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:textColor="#000"
+                android:layout_marginBottom="40dp"
+                android:text="GPIB Paulus"/>
+
             <EditText android:id="@+id/showTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -26,16 +37,6 @@
                 android:layout_marginBottom="16dp"
                 android:visibility="visible"
                 android:hint="Enter Date"/>
-
-            <TextView
-                android:id="@+id/rundownListTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="33dp"
-                android:textStyle="bold"
-                android:textSize="20dp"
-                android:textColor="#000"
-                android:text="Rundown For Today"/>
 
             <TextView
                 android:id="@+id/rundownListDescription"
@@ -75,6 +76,30 @@
                     android:layout_marginLeft="200dp"
                     android:text="Select Date" />
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rundownListNotFound"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginTop="120dp"
+            android:visibility="gone"
+            android:orientation="vertical">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textSize="20dp"
+                android:text="Opps! There is no rundown here!"
+                />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textSize="20dp"
+                android:textColor="#F06292"
+                android:text="Try with other date"
+                />
         </LinearLayout>
 
         <LinearLayout

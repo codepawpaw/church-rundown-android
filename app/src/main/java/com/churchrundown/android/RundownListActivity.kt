@@ -25,17 +25,18 @@ import services.RundownService
 import utility.DisplayUtil
 import java.text.DateFormatSymbols
 import android.widget.ProgressBar
-import android.widget.Toast
 import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.KeyEvent
 import entity.Organizer
-import kotlinx.android.synthetic.main.activity_main_menu.*
 import services.OrganizerService
 
 class RundownListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rundown_list)
+
+        val showTime = findViewById<EditText>(R.id.showTime)
+        showTime.hint = "Today"
 
         val intent = getIntent()
         val rundowns = intent.getStringExtra("rundowns")
@@ -145,14 +146,16 @@ class RundownListActivity : AppCompatActivity() {
 
     fun renderRundowns(jsonArrayOfRundowns: List<Rundown>) {
         val rundownItemContainer = findViewById<LinearLayout>(R.id.rundownItemContainer)
-        val rundownListTitle = findViewById<TextView>(R.id.rundownListTitle)
+
+        val rundownListChurchName = findViewById<TextView>(R.id.rundownListChurchName)
+        rundownListChurchName.text = "Rundowns of " + intent.getStringExtra("churchName")
 
         if(jsonArrayOfRundowns.isEmpty()) {
-            val rundownListDescription = findViewById<TextView>(R.id.rundownListDescription)
-            rundownListDescription.visibility = View.VISIBLE
-
-            rundownListTitle.text = "No rundown available"
-            rundownListDescription.text = "There are no rundowns available that match your search. Edit Your date filters to see more results."
+            val rundownListNotFound = findViewById<LinearLayout>(R.id.rundownListNotFound)
+            rundownListNotFound.visibility = View.VISIBLE
+        } else {
+            val rundownListNotFound = findViewById<LinearLayout>(R.id.rundownListNotFound)
+            rundownListNotFound.visibility = View.GONE
         }
 
         jsonArrayOfRundowns.forEach {
@@ -194,11 +197,7 @@ class RundownListActivity : AppCompatActivity() {
                 val displayedDate = dayOfMonth.toString() + " " + DateFormatSymbols().months[monthOfYear] + " " + year
                 showTimeEditText.setText(displayedDate)
 
-                val rundownListTitle = findViewById<TextView>(R.id.rundownListTitle)
-
                 resetView()
-
-                rundownListTitle.setText("Rundown For $displayedDate")
 
                 searchRundown(DisplayUtil.getDisplayedFormatTime(dayOfMonth), DisplayUtil.getDisplayedFormatTime(monthOfYear + 1), year.toString(), organizerId)
             }, year, month, day

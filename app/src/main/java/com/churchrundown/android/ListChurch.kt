@@ -8,8 +8,8 @@ import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.card.MaterialCardView
 import entity.Data
 import entity.Organizer
 import org.json.JSONArray
@@ -34,10 +34,11 @@ class ListChurch : AppCompatActivity() {
         val jsonArrayOfOrganizers = JSONArray(organizers)
 
         if(jsonArrayOfOrganizers.length() <= 0) {
-            val churchResultElement = findViewById<LinearLayout>(R.id.church_result)
+            val churchListTitle = findViewById<TextView>(R.id.churchListTitle)
+            churchListTitle.visibility = View.GONE
 
-            val notFoundLayout = LayoutInflater.from(applicationContext).inflate(R.layout.not_found, null)
-            churchResultElement.addView(notFoundLayout)
+            val churchListNotFound = findViewById<LinearLayout>(R.id.churchListNotFound)
+            churchListNotFound.visibility = View.VISIBLE
         }
 
         val searchTextBox = findViewById<EditText>(R.id.searchTextBox)
@@ -56,15 +57,18 @@ class ListChurch : AppCompatActivity() {
             val churchName = organizerObject.getString("name")
             val churchDescription = organizerObject.getString("description")
 
-            val layout = LayoutInflater.from(applicationContext).inflate(R.layout.church_item, null)
-            layout.findViewById<TextView>(R.id.churchName).text = churchName
-            layout.findViewById<TextView>(R.id.churchDesc).text = churchDescription
-            layout.id = churchId.toInt()
-            layout.setOnClickListener(View.OnClickListener {
-                clickHandler(it)
+            val layout = layoutInflater.inflate(R.layout.church_item, listOfChurch, false)
+
+            val churchItem = layout.findViewById<MaterialCardView>(R.id.churchItem)
+
+            churchItem.findViewById<TextView>(R.id.churchName).text = churchName
+            churchItem.findViewById<TextView>(R.id.churchDesc).text = churchDescription
+            churchItem.id = churchId.toInt()
+            churchItem.setOnClickListener(View.OnClickListener {
+                clickHandler(it, churchName)
             })
 
-            listOfChurch.addView(layout)
+            listOfChurch.addView(churchItem)
         }
     }
 
@@ -99,7 +103,7 @@ class ListChurch : AppCompatActivity() {
         })
     }
 
-    fun clickHandler(view: View) {
+    fun clickHandler(view: View, churchName: String) {
         val churchId = view.id
 
         var retrofit = RetrofitMain.retrofit
@@ -133,6 +137,7 @@ class ListChurch : AppCompatActivity() {
 
                 intent.putExtra("rundowns", rundowns.toString())
                 intent.putExtra("organizerId", "4")
+                intent.putExtra("churchName", churchName)
                 startActivity(intent)
             }
         })

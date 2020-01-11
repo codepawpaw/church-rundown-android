@@ -19,11 +19,11 @@
         <activity
             android:name=".RundownListActivity"
             android:label="@string/title_activity_rundown_list"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.NoActionBar" />
         <activity
             android:name=".ListChurch"
             android:label="@string/title_activity_list_church"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.NoActionBar" />
         <activity
             android:name=".MainMenuActivity"
             android:label="@string/app_name"
