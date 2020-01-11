@@ -24,7 +24,7 @@ android:minHeight="170dp">
         android:textStyle="bold"
         android:textSize="22dp"
         android:textColor="#000"
-        android:text="Kebaktian Pagi"/>
+        android:text=""/>
 
     <TextView
         android:id="@+id/rundownItemDetailSubtitle"
@@ -32,7 +32,7 @@ android:minHeight="170dp">
         android:layout_height="wrap_content"
         android:textSize="16dp"
         android:layout_marginBottom="4dp"
-        android:text="Menyanyi secara responsoria"/>
+        android:text=""/>
 
     <TextView
         android:id="@+id/rundownItemDetailContent"
@@ -40,7 +40,7 @@ android:minHeight="170dp">
         android:layout_height="wrap_content"
         android:textSize="14dp"
         android:textColor="#000"
-        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. "/>
+        android:text=""/>
 
 </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
