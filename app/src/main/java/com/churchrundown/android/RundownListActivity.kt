@@ -29,6 +29,7 @@ import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.KeyEvent
 import entity.Organizer
 import services.OrganizerService
+import java.time.format.TextStyle
 
 class RundownListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -168,13 +169,14 @@ class RundownListActivity : AppCompatActivity() {
             val endTime = LocalDateTime.parse(it.endTime, dateFormat)
 
 
-            val displayedShowTime = "Start ${DisplayUtil.getDisplayedFormatTime(showTime.hour)}:${DisplayUtil.getDisplayedFormatTime(showTime.minute)}"
-            val displayedEndTime = "End ${DisplayUtil.getDisplayedFormatTime(endTime.hour)}:${DisplayUtil.getDisplayedFormatTime(endTime.minute)}"
+            val displayDate = "${showTime.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ENGLISH)}, ${showTime.dayOfMonth} - ${showTime.month.getDisplayName(TextStyle.SHORT, Locale.ENGLISH)} - ${showTime.year}"
+            val displayedShowTime = "${DisplayUtil.getDisplayedFormatTime(showTime.hour)}:${DisplayUtil.getDisplayedFormatTime(showTime.minute)}"
+            val displayedEndTime = "${DisplayUtil.getDisplayedFormatTime(endTime.hour)}:${DisplayUtil.getDisplayedFormatTime(endTime.minute)}"
 
             rundownItem.findViewById<TextView>(R.id.rundownItemTitle).text = it.title
             rundownItem.findViewById<TextView>(R.id.rundownItemSubtitle).text = it.subtitle
-            rundownItem.findViewById<TextView>(R.id.rundownItemStartTime).text = displayedShowTime
-            rundownItem.findViewById<TextView>(R.id.rundownItemEndTime).text = displayedEndTime
+            rundownItem.findViewById<TextView>(R.id.rundownItemTime).text = "$displayedShowTime - $displayedEndTime"
+            rundownItem.findViewById<TextView>(R.id.rundownItemDate).text = displayDate
 
             rundownItem.id = it.id!!.toInt()
 

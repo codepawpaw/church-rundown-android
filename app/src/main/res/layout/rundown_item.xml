@@ -34,17 +34,33 @@ android:minHeight="170dp">
         android:text="Kebaktian kali ini membawa tema kasih kristus yang selalu baru setiap hari"/>
 
     <TextView
-        android:id="@+id/rundownItemStartTime"
+        android:id="@+id/rundownItemDate"
         android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dimulai 12:30 PM"/>
+        android:text="Fri, 31-Jan-2020"/>
 
     <TextView
-        android:id="@+id/rundownItemEndTime"
+        android:id="@+id/rundownItemTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Selesai  14:00 PM"/>
+        android:text="12:30 PM - 14:00 PM"/>
+
+    <RelativeLayout
+        android:layout_height="27dp"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:id="@+id/detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#F06292"
+            android:textSize="12dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="Touch to see content"/>
+    </RelativeLayout>
 
 </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -65,7 +65,7 @@ class ListChurch : AppCompatActivity() {
             churchItem.findViewById<TextView>(R.id.churchDesc).text = churchDescription
             churchItem.id = churchId.toInt()
             churchItem.setOnClickListener(View.OnClickListener {
-                clickHandler(it, churchName)
+                clickHandler(churchId.toInt(), churchName)
             })
 
             listOfChurch.addView(churchItem)
@@ -103,8 +103,8 @@ class ListChurch : AppCompatActivity() {
         })
     }
 
-    fun clickHandler(view: View, churchName: String) {
-        val churchId = view.id
+    fun clickHandler(churchId: Int, churchName: String) {
+        val churchId = churchId
 
         var retrofit = RetrofitMain.retrofit
 
@@ -136,7 +136,7 @@ class ListChurch : AppCompatActivity() {
                 val rundowns = JSONArray(response.body()!!.data)
 
                 intent.putExtra("rundowns", rundowns.toString())
-                intent.putExtra("organizerId", "4")
+                intent.putExtra("organizerId", churchId.toString())
                 intent.putExtra("churchName", churchName)
                 startActivity(intent)
             }
