@@ -54,6 +54,7 @@ class RundownListActivity : AppCompatActivity() {
         })
 
         val searchTextBox = findViewById<EditText>(R.id.searchTextBox)
+        searchTextBox.hint = "Find Church"
         searchTextBox.setOnKeyListener { _, keyCode, event ->
             if (event.action === KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
                 searchChurch(searchTextBox.text.toString())
@@ -169,7 +170,7 @@ class RundownListActivity : AppCompatActivity() {
             val endTime = LocalDateTime.parse(it.endTime, dateFormat)
 
 
-            val displayDate = "${showTime.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ENGLISH)}, ${showTime.dayOfMonth} - ${showTime.month.getDisplayName(TextStyle.SHORT, Locale.ENGLISH)} - ${showTime.year}"
+            val displayDate = "${showTime.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ENGLISH)}, ${showTime.dayOfMonth}-${showTime.month.getDisplayName(TextStyle.SHORT, Locale.ENGLISH)}-${showTime.year}"
             val displayedShowTime = "${DisplayUtil.getDisplayedFormatTime(showTime.hour)}:${DisplayUtil.getDisplayedFormatTime(showTime.minute)}"
             val displayedEndTime = "${DisplayUtil.getDisplayedFormatTime(endTime.hour)}:${DisplayUtil.getDisplayedFormatTime(endTime.minute)}"
 
