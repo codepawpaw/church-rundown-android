@@ -43,6 +43,9 @@ class ListChurch : AppCompatActivity() {
 
             val churchListNotFound = findViewById<LinearLayout>(R.id.churchListNotFound)
             churchListNotFound.visibility = View.VISIBLE
+        } else {
+            val churchListTitle = findViewById<TextView>(R.id.churchListTitle)
+            churchListTitle.visibility = View.VISIBLE
         }
 
         val searchTextBox = findViewById<EditText>(R.id.searchTextBox)
