@@ -3,10 +3,10 @@ package com.churchrundown.android
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.card.MaterialCardView
@@ -29,9 +29,13 @@ class ListChurch : AppCompatActivity() {
 
         val intent = getIntent()
         val organizers = intent.getStringExtra("organizers")
-        val listOfChurch = findViewById<LinearLayout>(R.id.listOfChurch)
-
         val jsonArrayOfOrganizers = JSONArray(organizers)
+
+        render(jsonArrayOfOrganizers)
+    }
+
+    fun render(jsonArrayOfOrganizers: JSONArray) {
+        val listOfChurch = findViewById<LinearLayout>(R.id.listOfChurch)
 
         if(jsonArrayOfOrganizers.length() <= 0) {
             val churchListTitle = findViewById<TextView>(R.id.churchListTitle)
@@ -72,7 +76,18 @@ class ListChurch : AppCompatActivity() {
         }
     }
 
+    fun resetView() {
+        val churchListNotFound = findViewById<LinearLayout>(R.id.churchListNotFound)
+        churchListNotFound.visibility = View.GONE
+
+        val listOfChurchContainer = findViewById<LinearLayout>(R.id.listOfChurch)
+        listOfChurchContainer.removeAllViews()
+    }
+
     fun searchChurch(churchName: String) {
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        progressBar.visibility = View.VISIBLE
+
         var retrofit = RetrofitMain.retrofit
 
         val service =
@@ -83,13 +98,15 @@ class ListChurch : AppCompatActivity() {
         call.enqueue(object : Callback<List<Organizer>> {
             override fun onFailure(call: Call<List<Organizer>>, t: Throwable) {
                 println("LOG MESSAGE = " + t.message)
+                progressBar.visibility = View.GONE
             }
 
             override fun onResponse(
                 call: Call<List<Organizer>>,
                 response: Response<List<Organizer>>
             ) {
-                val intent = Intent(applicationContext, ListChurch::class.java)
+                progressBar.visibility = View.GONE
+                //val intent = Intent(applicationContext, ListChurch::class.java)
                 val organizers = response.body()
 
                 val listOfOrganizer = JSONArray()
@@ -97,8 +114,11 @@ class ListChurch : AppCompatActivity() {
                     listOfOrganizer.put(it.toJSON())
                 }
 
-                intent.putExtra("organizers", listOfOrganizer.toString())
-                startActivity(intent)
+                resetView()
+                render(listOfOrganizer)
+
+                //intent.putExtra("organizers", listOfOrganizer.toString())
+                //startActivity(intent)
             }
         })
     }

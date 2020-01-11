@@ -26,6 +26,14 @@
             android:text="Churchs for you"
             />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_height="wrap_content" >
+        </ProgressBar>
+
         <LinearLayout
             android:id="@+id/churchListNotFound"
             android:layout_width="match_parent"
