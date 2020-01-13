@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Church Rundown</string>
+    <string name="app_name">Acara Gereja</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_list_church">ListChurch</string>
     <string name="title_activity_rundown_list">RundownListActivity</string>
