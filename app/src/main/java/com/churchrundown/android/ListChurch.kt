@@ -62,14 +62,17 @@ class ListChurch : AppCompatActivity() {
             val organizerObject = JSONObject(jsonArrayOfOrganizers[i].toString())
             var churchId = organizerObject.getString("id")
             val churchName = organizerObject.getString("name")
+            val churchDisplayName = organizerObject.getString("displayName")
             val churchDescription = organizerObject.getString("description")
+            val churchLocationAddress = organizerObject.getString("locationAddress")
 
             val layout = layoutInflater.inflate(R.layout.church_item, listOfChurch, false)
 
             val churchItem = layout.findViewById<MaterialCardView>(R.id.churchItem)
 
             churchItem.findViewById<TextView>(R.id.churchName).text = churchName
-            churchItem.findViewById<TextView>(R.id.churchDesc).text = churchDescription
+            churchItem.findViewById<TextView>(R.id.churchDisplayName).text = churchDisplayName
+            churchItem.findViewById<TextView>(R.id.churchDesc).text = churchLocationAddress
             churchItem.id = churchId.toInt()
             churchItem.setOnClickListener(View.OnClickListener {
                 clickHandler(churchId.toInt(), churchName)
@@ -109,7 +112,6 @@ class ListChurch : AppCompatActivity() {
                 response: Response<List<Organizer>>
             ) {
                 progressBar.visibility = View.GONE
-                //val intent = Intent(applicationContext, ListChurch::class.java)
                 val organizers = response.body()
 
                 val listOfOrganizer = JSONArray()
@@ -119,9 +121,6 @@ class ListChurch : AppCompatActivity() {
 
                 resetView()
                 render(listOfOrganizer)
-
-                //intent.putExtra("organizers", listOfOrganizer.toString())
-                //startActivity(intent)
             }
         })
     }
