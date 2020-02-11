@@ -27,33 +27,6 @@
             android:textSize="30dp"
             android:textColor="#F06292"/>
 
-        <EditText
-            android:id="@+id/churchName"
-            android:layout_width="350dp"
-            android:layout_height="51dp"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/rounded_textbox"
-            android:ellipsize="start"
-            android:ems="10"
-            android:gravity="start|left|center"
-            android:hint="Find Church"
-            android:inputType="text"
-            android:paddingLeft="20dp"
-            android:shadowColor="@color/cardview_light_background"
-            android:textColor="#000" />
-
-        <Button
-            android:id="@+id/searchButton"
-            android:layout_width="147dp"
-            android:layout_height="wrap_content"
-            android:background="#F06292"
-            android:gravity="center"
-            android:onClick="clickHandler"
-            android:text="Search"
-            android:textColor="#fff" />
-
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"

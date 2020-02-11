@@ -54,7 +54,7 @@
                     android:paddingLeft="20dp"
                     android:shadowColor="@color/cardview_light_background"
                     android:background="@drawable/rounded_textbox"
-                    android:ems="10"
+                    android:ems="20"
                     android:textColor="#000"
                     android:hint="Find Church"
                     android:gravity="start|left|center"

@@ -21,6 +21,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import android.app.DatePickerDialog
+import android.location.Geocoder
 import services.RundownService
 import utility.DisplayUtil
 import java.text.DateFormatSymbols
@@ -73,7 +74,16 @@ class RundownListActivity : AppCompatActivity() {
         val service =
             retrofit!!.create(OrganizerService::class.java)
 
-        val call = service.getOrganizer(churchName.toString())
+        val gpsTracker = GPSTracker(this)
+        val latitude = gpsTracker.latitude
+        val longitude = gpsTracker.longitude
+
+        val geocoder = Geocoder(this, Locale.getDefault())
+        val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+
+        val province = addresses[0].adminArea
+
+        val call = service.getOrganizerByProvinceAndName(province, churchName)
 
         call.enqueue(object : Callback<List<Organizer>> {
             override fun onFailure(call: Call<List<Organizer>>, t: Throwable) {

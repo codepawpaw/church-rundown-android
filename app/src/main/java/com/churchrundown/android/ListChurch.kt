@@ -1,6 +1,7 @@
 package com.churchrundown.android
 
 import android.content.Intent
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -29,6 +30,7 @@ class ListChurch : AppCompatActivity() {
 
         val intent = getIntent()
         val organizers = intent.getStringExtra("organizers")
+
         val jsonArrayOfOrganizers = JSONArray(organizers)
 
         render(jsonArrayOfOrganizers)
@@ -37,21 +39,27 @@ class ListChurch : AppCompatActivity() {
     fun render(jsonArrayOfOrganizers: JSONArray) {
         val listOfChurch = findViewById<LinearLayout>(R.id.listOfChurch)
 
-        if(jsonArrayOfOrganizers.length() <= 0) {
-            val churchListTitle = findViewById<TextView>(R.id.churchListTitle)
-            churchListTitle.visibility = View.GONE
+        val gpsTracker = GPSTracker(this)
+        val latitude = gpsTracker.latitude
+        val longitude = gpsTracker.longitude
 
+        val geocoder = Geocoder(this, Locale.getDefault())
+        val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+
+        val province = addresses[0].adminArea
+
+        val churchListTitle = findViewById<TextView>(R.id.churchListTitle)
+        churchListTitle.text = "Churchs in $province"
+
+        if(jsonArrayOfOrganizers.length() <= 0) {
             val churchListNotFound = findViewById<LinearLayout>(R.id.churchListNotFound)
             churchListNotFound.visibility = View.VISIBLE
-        } else {
-            val churchListTitle = findViewById<TextView>(R.id.churchListTitle)
-            churchListTitle.visibility = View.VISIBLE
         }
 
         val searchTextBox = findViewById<EditText>(R.id.searchTextBox)
         searchTextBox.setOnKeyListener { _, keyCode, event ->
             if (event.action === KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                searchChurch(searchTextBox.text.toString())
+                searchChurch(searchTextBox.text.toString(), province)
                 true
             }
 
@@ -90,7 +98,7 @@ class ListChurch : AppCompatActivity() {
         listOfChurchContainer.removeAllViews()
     }
 
-    fun searchChurch(churchName: String) {
+    fun searchChurch(churchName: String, provinceName: String) {
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
 
@@ -99,7 +107,7 @@ class ListChurch : AppCompatActivity() {
         val service =
             retrofit!!.create(OrganizerService::class.java)
 
-        val call = service.getOrganizer(churchName)
+        val call = service.getOrganizerByProvinceAndName(provinceName, churchName)
 
         call.enqueue(object : Callback<List<Organizer>> {
             override fun onFailure(call: Call<List<Organizer>>, t: Throwable) {
