@@ -19,14 +19,6 @@
             android:layout_marginTop="-70dp"
             app:srcCompat="@drawable/ic_logo_only" />
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="Acara Gereja"
-            android:textStyle="bold"
-            android:textSize="30dp"
-            android:textColor="#F06292"/>
-
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"

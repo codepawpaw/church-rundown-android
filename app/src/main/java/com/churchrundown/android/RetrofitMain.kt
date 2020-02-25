@@ -8,8 +8,8 @@ class RetrofitMain {
         var retrofit: Retrofit? = null
 
         fun build() {
-            //var BASE_URL = "https://acaragereja.com/public/"
-            var BASE_URL = "http://192.168.130.185:3000/public/"
+            var BASE_URL = "https://acaragereja.com/public/"
+            //var BASE_URL = "http://192.168.43.47:3000/public/"
 
             retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
